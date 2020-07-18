@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import InputField from '../common/InputField';
 import { connect } from 'react-redux';
 import { setAlert } from '../../redux/actions/alert';
-import { Link } from 'react-router-dom';
-const Register = ({ setAlert }) => {
+import { registerUser } from '../../redux/actions/auth';
+import { Link, Redirect } from 'react-router-dom';
+const Register = ({ setAlert, registerUser, auth: { isAuth } }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,12 +17,16 @@ const Register = ({ setAlert }) => {
     if (password !== confirmPassword) {
       setAlert('passwords not match', 'danger');
     } else {
-      console.log(formData);
+      registerUser({ name, email, password });
     }
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  // redirect user
+  if (isAuth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <>
       <h1 className="large text-primary">Sign Up</h1>
@@ -73,7 +78,12 @@ const Register = ({ setAlert }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAlert: (msg, alertType) => dispatch(setAlert(msg, alertType)),
+    registerUser: (user) => dispatch(registerUser(user)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Register);
+const mapStateToProps = ({ auth }) => ({
+  auth,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

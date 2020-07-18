@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import InputField from '../common/InputField';
-import { Link } from 'react-router-dom';
-const Login = () => {
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loginUser } from '../../redux/actions/auth';
+const Login = ({ loginUser, auth: { isAuth }}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -9,10 +11,16 @@ const Login = () => {
   const { email, password } = formData;
   const handleSubmit = (e) => {
     e.preventDefault();
+    loginUser({ email, password });
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // Redirect user
+  if (isAuth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <>
       <h1 className="large text-primary">Sign In</h1>
@@ -39,10 +47,20 @@ const Login = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Dont have an account? <Link to="/login">Sign In</Link>
+        Dont have an account? <Link to="/register">Sign Up</Link>
       </p>
     </>
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (user) => dispatch(loginUser(user)),
+  };
+};
+
+const mapStateToProps = ({ auth }) => ({
+  auth,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

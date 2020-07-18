@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
+const cors = require('cors')
 dotenv.config({ path: './config.env' })
 const app = express()
 // connect database
@@ -9,7 +10,7 @@ require('./database/models/User')
 
 // init middleware
 app.use(express.json({ extended: false }))
-
+app.use(cors())
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
