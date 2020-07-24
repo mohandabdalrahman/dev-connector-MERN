@@ -1,6 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Layout = () => {
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+const Layout = ({ auth: { isAuth } }) => {
+  if (isAuth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -24,4 +28,6 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+const mapStateToProps = ({ auth }) => ({ auth });
+
+export default connect(mapStateToProps, null)(Layout);

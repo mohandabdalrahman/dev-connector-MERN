@@ -1,17 +1,24 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../../redux/actions/auth';
 const Navbar = ({ auth: { isAuth }, logOut }) => {
   const handleAuthUser = () => {
     if (isAuth) {
       return (
-        <li>
-          <a onClick={() => logOut()} href="#!">
-            <i className="fas fa-sign-out-alt"></i>{' '}
-            Logout
-          </a>
-        </li>
+        <>
+          <li>
+            <a onClick={() => logOut()} href="#!">
+              <i className="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+          <li>
+            <Link to="/dashboard">
+              <i className="fas fa-user"></i> {' '}
+              <span className="hide-sm">Dashboard</span>
+            </Link>
+          </li>
+        </>
       );
     } else {
       return (

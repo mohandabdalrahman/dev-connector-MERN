@@ -45,7 +45,7 @@ const createProfile = async (req, res) => {
     let profile = await Profile.findOne({ user: req.user.id })
     if (profile) {
       // update profile
-      profile = await Profile.findByIdAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true })
+      profile = await Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true })
       return res.status(204).json({
         success: true,
         msg: 'Update is success',

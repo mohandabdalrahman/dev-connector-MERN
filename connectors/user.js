@@ -4,7 +4,6 @@ const User = require('../database/models/User')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const registerUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
