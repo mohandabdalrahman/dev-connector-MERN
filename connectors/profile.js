@@ -1,8 +1,8 @@
 const Profile = require('../database/models/Profile')
 const User = require('../database/models/User')
+const Post = require('../database/models/Posts')
 const { handleGeneralError } = require('../utils/generalError')
 const { validationResult } = require('express-validator')
-const mongoose = require('mongoose')
 const axios = require('axios').default
 const getProfile = async (req, res) => {
   try {
@@ -93,6 +93,8 @@ const getProfileByUserId = async (req, res) => {
 
 const deleteProfileAndUser = async (req, res) => {
   try {
+    // delete user posts
+    await Post.deleteMany({ user: req.user.id })
     // Remove profile
     await Profile.findOneAndDelete({ user: req.user.id })
     // Remove user
