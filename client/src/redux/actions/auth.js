@@ -2,9 +2,11 @@ import axios from 'axios'
 import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLAER_PROFILE } from './types'
 import { setAlert } from './alert'
 import { setAuthToken } from '../../utils/setAuthToken'
+const URL = 'http://localhost:5000/'
+
 export const registerUser = (user) => async dispatch => {
   try {
-    const userRes = await axios.post('api/v1/users', JSON.stringify(user), {
+    const userRes = await axios.post(`${URL}api/v1/users`, JSON.stringify(user), {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -30,7 +32,7 @@ export const loadUser = () => async dispatch => {
     setAuthToken(localStorage.token)
   }
   try {
-    const userRes = await axios.get('api/v1/auth')
+    const userRes = await axios.get(`${URL}api/v1/auth`)
     dispatch({
       type: USER_LOADED,
       payload: userRes.data.data
@@ -44,7 +46,7 @@ export const loadUser = () => async dispatch => {
 
 export const loginUser = (user) => async dispatch => {
   try {
-    const userRes = await axios.post('api/v1/auth', JSON.stringify(user), {
+    const userRes = await axios.post(`${URL}api/v1/auth`, JSON.stringify(user), {
       headers: {
         'Content-Type': 'application/json'
       }
