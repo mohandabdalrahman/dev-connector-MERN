@@ -21,6 +21,9 @@ const Navbar = ({ auth: { isAuth }, logOut }) => {
           <li>
             <Link to="/profiles">Developers</Link>
           </li>
+          <li>
+            <Link to="/posts">Posts</Link>
+          </li>
         </>
       );
     } else {
