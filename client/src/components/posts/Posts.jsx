@@ -7,6 +7,7 @@ import PostForm from './PostForm';
 const Posts = ({ post: { posts, loading }, getPosts }) => {
   useEffect(() => {
     getPosts();
+    // eslint-disable-next-line
   }, []);
   return (
     <>

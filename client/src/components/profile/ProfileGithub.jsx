@@ -5,6 +5,7 @@ import Spinner from '../common/Spinner';
 const ProfileGithub = ({ userName, getGithubRepos, profile: { repos } }) => {
   useEffect(() => {
     getGithubRepos(userName);
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="profile-github">
